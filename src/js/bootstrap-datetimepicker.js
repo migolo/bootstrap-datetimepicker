@@ -430,12 +430,22 @@
                     throw new Error('datetimepicker component should be placed within a relative positioned container');
                 }
 
-                widget.css({
-                    top: vertical === 'top' ? 'auto' : position.top + element.outerHeight(),
-                    bottom: vertical === 'top' ? position.top + element.outerHeight() : 'auto',
-                    left: horizontal === 'left' ? (parent === element ? 0 : position.left) : 'auto',
-                    right: horizontal === 'left' ? 'auto' : parent.outerWidth() - element.outerWidth() - (parent === element ? 0 : position.left)
-                });
+                if(options.widgetParent != null){
+                    position = options.widgetParent.position();
+                    widget.css({
+                        top: vertical === 'top' ? 'auto' : options.widgetParent.outerHeight() + 5,
+                        bottom: vertical === 'top' ? options.widgetParent.outerHeight() : 'auto',
+                        left: horizontal === 'left' ? 15 : 'auto',
+                        right: horizontal === 'left' ? 'auto' : 15,
+                    });
+                } else {
+                    widget.css({
+                        top: vertical === 'top' ? 'auto' : position.top + element.outerHeight(),
+                        bottom: vertical === 'top' ? position.top + element.outerHeight() : 'auto',
+                        left: horizontal === 'left' ? (parent === element ? 0 : position.left) : 'auto',
+                        right: horizontal === 'left' ? 'auto' : parent.outerWidth() - element.outerWidth() - (parent === element ? 0 : position.left)
+                    });                    
+                }
             },
 
             notifyEvent = function (e) {
